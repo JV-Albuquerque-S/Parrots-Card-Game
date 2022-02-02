@@ -18,3 +18,10 @@ h1 {
     margin-bottom: -30px;
     margin-right: 10px;
 }
+
+.cartas div {
+    height: 20px;
+    width: 20px;
+    margin: 15px 20px;
+    background-color: blueviolet;
+}
