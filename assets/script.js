@@ -1,4 +1,5 @@
-let arrayDeGifs = ["<img src='/gifs and images/metalparrot.gif' alt='Papagaio'>", 
+let arrayDeGifs = [1,
+"<img src='/gifs and images/metalparrot.gif' alt='Papagaio'>", 
 "<img src='/gifs and images/metalparrot.gif' alt='Papagaio'>", 
 "<img src='/gifs and images/bobrossparrot.gif' alt='Papagaio'>", 
 "<img src='/gifs and images/bobrossparrot.gif' alt='Papagaio'>", 
@@ -11,7 +12,11 @@ let arrayDeGifs = ["<img src='/gifs and images/metalparrot.gif' alt='Papagaio'>"
 "<img src='/gifs and images/tripletsparrot.gif' alt='Papagaio'>", 
 "<img src='/gifs and images/tripletsparrot.gif' alt='Papagaio'>", 
 "<img src='/gifs and images/unicornparrot.gif' alt='Papagaio'>", 
-"<img src='/gifs and images/unicornparrot.gif' alt='Papagaio'>", ];
+"<img src='/gifs and images/unicornparrot.gif' alt='Papagaio'>"];
+
+let jogadas = 0;
+let cartasViradas = 0;
+let compararCartas = 0;
 
 //Escolha de quantidade de cartas
 
@@ -28,7 +33,7 @@ while(qtdCartas > 14 || qtdCartas < 4 || qtdCartas%2 != 0) {
 let cartaFrente = [];
 
 for(let i = 0; i < qtdCartas; i++){
-    cartaFrente[i] = i;
+    cartaFrente[i] = (i + 1);
 }
 
 //Embaralhamento da array
@@ -45,44 +50,47 @@ for(count = 0; count < qtdCartas; count++) {
     //console.log(count);
     const cards = document.querySelector(".cartas");
     cards.innerHTML +=`
-    <div class="umaCarta">
-        <div class="face front" onclick="girarCartaFront(this)">
+    <div class="umaCarta" data-identifier="card">
+        <div class="face front a${cartaFrente[count]}" data-identifier="front-face">
             ${arrayDeGifs[cartaFrente[count]]}
         </div>
 
-        <div class="face back" onclick="girarCartaBack(this)">
+        <div class="face back" onclick="girarCartaBack(this)" data-identifier="back-face">
             <img src="/gifs and images/front.png" alt="Papagaio">
         </div>
     </div>
     `
 }
 
-function girarCartaFront(carta) {
-    //const lado = document.querySelector(carta);
-    carta.classList.add("front-face");
-    if(carta.classList.contains("front-face-return")) {
-        carta.classList.remove("front-face-return");
-    }
-    setTimeout(retornarCartaFront, 3000);
-}
-
 function girarCartaBack(carta) {
-    //const lado = document.querySelector(carta);
-    carta.classList.add("back-face");
-    if(carta.classList.contains("back-face-return")) {
-        carta.classList.remove("back-face-return");
+    if(cartasViradas<2){
+        if(carta.classList.contains("back-face-return")) {
+            carta.classList.remove("back-face-return");
+        }
+        carta.classList.add("back-face");
+        carta.classList.add("virada");
+        jogadas++;
+        cartasViradas++;
+
+
+        if(cartasViradas==2){
+            setTimeout(retornarCartaBack, 1000);
+        }
+
+        
+        
+
+        console.log("cartasViradas: " + cartasViradas);
     }
-    setTimeout(retornarCartaBack, 3000);
 }
 
-function retornarCartaFront() {
-    const carta = document.querySelector(".front-face");
-    carta.classList.add("front-face-return");
-    carta.classList.remove("front-face");
-}
 
 function retornarCartaBack() {
-    const carta = document.querySelector(".back-face");
-    carta.classList.add("back-face-return");
-    carta.classList.remove("back-face");
+    const carta = document.querySelectorAll(".virada");
+    for(let pos = 0; pos < carta.length; pos++){
+        carta[pos].classList.add("back-face-return");
+        carta[pos].classList.remove("back-face");
+        carta[pos].classList.remove("virada");
+        cartasViradas = 0;
+    }
 }
