@@ -27,22 +27,59 @@ h1 {
     margin-right: 116px;
 }
 
-.cartas div {
+.umaCarta {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     height: 146px;
     width: 117px;
     margin-right: 34px;
     margin-bottom: 34px;
     border-radius: 5px;
-    background-color: #A7E9AF;
 }
 
 .cartas img{
     height: 100px;
     width: 100px;
 }
+
+.face {
+    width: 100%;
+    height: 100%;
+    background-color: #A7E9AF;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: all .5s;
+    transform-style: preserve-3d;
+  }
+
+  .front-face {
+    transform: rotateY(180deg);
+  }
+
+  .umaCarta .front-face {
+    transform: rotateY(0deg);
+  }
+
+  .umaCarta .front-face-return {
+    transform: rotateY(-180deg);
+  }
+
+  .umaCarta .back-face {
+    transform: rotateY(-180deg);
+  }
+
+  .umaCarta .back-face-return {
+    transform: rotateY(0deg);
+  }
+
+
 
 @media (max-width: 557px){
     h1 {
